@@ -20,7 +20,7 @@ public class AnalyzeMian{
     static char ch;
     static int index;
     static int syn, sum=0, row;
-
+    static GetSortChar gsc = new GetSortChar();
      //核心分析器
     static void analyzer(){
         token.delete(0, token.length());                //置空token对象，清除
@@ -53,134 +53,8 @@ public class AnalyzeMian{
             index--;
             syn=100;                     //整数型，种别码为100
         }
-        else switch(ch){
-
-        case '<':
-            token.append(ch);
-            ch=storage.charAt(index++);
-            if(ch=='='){
-                token.append(ch);
-                syn=35;
-            }
-            else if(ch=='>'){
-                token.append(ch);
-                syn=34;
-            }
-            else{
-                syn=33;
-                index--;
-            }
-            break;
-        case '>':
-            token.append(ch);
-            ch=storage.charAt(index++);
-            if(ch=='='){
-                token.append(ch);
-                syn=37;
-            }
-            else{
-                syn=36;
-                index--;
-            }
-            break;
-        case '*':
-            token.append(ch);
-            ch=storage.charAt(index++);
-            if(ch=='*'){
-                token.append(ch);
-                syn=48;
-            }
-            else{
-                syn=46;
-                index--;
-            }
-            break;
-        case '=':
-            token.append(ch);
-            ch=storage.charAt(index++);
-            if(ch=='='){
-                syn=49;
-                token.append(ch);
-            }
-            else{
-                syn=38;
-                index--;
-            }
-            break;
-        case '/':
-            token.append(ch);
-            ch=storage.charAt(index++);
-            if(ch=='/'){
-                while(ch!=' '){
-                    ch=storage.charAt(index++);  //忽略掉注释，以空格为界定
-                }
-                syn=-2;
-                break;
-            }else if(ch=='*') {
-            	while(ch!=' ') {
-            		ch = storage.charAt(index++);
-            	}
-            	syn = -2;
-            	break;
-            }else{
-                syn=30;
-                index--;
-            }
-            break;
-        case '+':
-            syn=44;
-            token.append(ch);
-            break;
-        case '-':
-            syn=45;
-            token.append(ch);
-            break;
-        case ';':
-            syn=41;
-            token.append(ch);
-            break;
-        case '(':
-            syn=42;
-            token.append(ch);
-            break;
-        case ')':
-            syn=43;
-            token.append(ch);
-            break;
-        case '[':
-        	syn = 39;
-        	token.append(ch);
-        	break;
-        case ']':
-        	syn = 40;
-        	token.append(ch);
-        	break;
-        case '{':
-        	syn = 51;
-        	token.append(ch);
-        	break;
-        case '}':
-        	syn = 52;
-        	token.append(ch);
-        	break;
-        case '#':
-            syn=0;
-            token.append(ch);
-            break;
-        case '.':
-        	syn = 50;
-        	token.append(ch);
-        	break;
-        case '$':
-        	syn=-3;
-        	token.append(ch);
-        	break;
-        case '\n':
-            syn=-2;
-            token.append(ch);
-            break;
-        default:
-            syn=-1;
+        else {
+        	syn =gsc.getSortChar(ch, storage, token, index);
         }
     }
     public static void main(String[] args) {
@@ -188,22 +62,21 @@ public class AnalyzeMian{
     	
     	String fileName = "D:\\c\\111.cpp";
         index=0;
-        row=1;
+        row=1;     
         String tempString;
         //从文档读入程序
         try {
         	BufferedReader br = new BufferedReader(new FileReader(fileName));
         	tempString = br.readLine();
         	while(tempString!=null)
-        	{
-                storage=storage+tempString+'\n';
-                tempString=br.readLine();
+        	{   
+                storage=storage+tempString;
+                tempString=br.readLine();               
         	};        
 		} catch (IOException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}    
-        
         index=0; 
         //输出过程
         do{

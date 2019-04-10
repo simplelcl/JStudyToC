@@ -9,16 +9,16 @@ else        6            static     28           ==       49
 long        7            if         29           .        50             
 switch      8            typedef    30           {        51   
 case        9            enum       31           }        52
-register    10           const      32  
-char        11           <          33   
-extern      12           <>         34  
-return      13           <=         35 
-union       14           >          36
-float       15           >=         37
-short       16           =          38
-unsigned    17           [          39
-continue    18           ]          40 
-for         19           ;          41 
-signed      20           (          42 
-void        21            )         43 
-default     22           #          0    
+register    10           const      32           ++       53
+char        11           <          33           +=       54
+extern      12           <>         34           -=       55
+return      13           <=         35           --       56
+union       14           >          36           |        57
+float       15           >=         37           ||       58
+short       16           =          38           "        59
+unsigned    17           [          39           '        60
+continue    18           ]          40           :        61
+for         19           ;          41           %        62
+signed      20           (          42           ,        63
+void        21            )         43           &        64
+default     22           #          0            \        65
